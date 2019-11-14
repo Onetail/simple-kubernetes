@@ -13,9 +13,7 @@ initialize() {
 }
 
 usage() {
-    echo -e "${RED}Usage: $0 [init|revert] [local|sit|uat|prod]${NC}"
-    echo -e "${RED}Usage: $0 [create] [table-to-create]${NC}"
-    exit 1
+    echo -e "${RED}Usage: $0 [init|clear] [local|sit|uat|prod]${NC}"
 }
 
 case "$CMD" in
