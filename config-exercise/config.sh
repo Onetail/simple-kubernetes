@@ -1,15 +1,28 @@
-#!/usr/bin/env bash
 
 RED='\033[0;31m'
 NC='\033[0m' # No Color
+GREEN='\033[0;32m'
 
 CMD=$1
-STAGE=$2
+FILENAME=$2
 
 initialize() {
-    set KUBECONFIG_SAVED=$KUBECONFIG
-    set KUBECONFIG=$KUBECONFIG:config-demo.yml
-    echo $KUBECONFIG
+    export KUBECONFIG_SAVED=$KUBECONFIG
+    if [ -z "$KUBECONFIG" ] 
+    then
+
+        export KUBECONFIG="config-demo.yml"
+        echo "${GREEN}現在kube config = $KUBECONFIG${NC}"
+    else 
+        export KUBECONFIG=$KUBECONFIG:"config-demo.yml"
+        echo "${GREEN}現在kube config = $KUBECONFIG${NC}"
+    fi
+}
+
+clear() {
+    export KUBECONFIG_SAVED=
+    export KUBECONFIG=
+    echo "${GREEN}現在kube config = $KUBECONFIG${NC}"
 }
 
 usage() {
@@ -18,7 +31,10 @@ usage() {
 
 case "$CMD" in
   init)
-    initialize ${STAGE}
+    initialize ${FILENAME}
+    ;;
+  clear)
+    clear
     ;;
   *)
     usage

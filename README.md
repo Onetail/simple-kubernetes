@@ -24,12 +24,22 @@
 
 `kubectl config --kubeconfig=config-demo.yml use-context exp-scratch`
 
+> 查看當前群集
+
+`kubectl config current-context`
+
 ## 使用 kubernetes for start
 
 > 清理環境變數
 
-> `source config-exercise/config.sh clear`
+`source config-exercise/config.sh clear`
 
 > 初始化環境變數
 
-> `source config-exercise/config.sh init`
+`source config-exercise/config.sh init`
+
+> 開啟 kubectl proxy
+
+`kubectl proxy`
+
+[http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/login](http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/login)
