@@ -8,21 +8,27 @@ FILENAME=$2
 
 initialize() {
     export KUBECONFIG_SAVED=$KUBECONFIG
+    export KUBETOKEN=$(kubectl describe secret $(kubectl get secrets | grep default | cut -f1 -d ' ') | grep -E '^token' | cut -f2 -d':' | tr -d ' ')
+    export KUBEAPISERVER=$(kubectl config view | grep https | cut -f 2- -d ":" | tr -d " ")
     if [ -z "$KUBECONFIG" ] 
     then
-
         export KUBECONFIG="config-demo.yml"
-        echo "${GREEN}現在kube config = $KUBECONFIG${NC}"
     else 
         export KUBECONFIG=$KUBECONFIG:"config-demo.yml"
-        echo "${GREEN}現在kube config = $KUBECONFIG${NC}"
     fi
+    echo "${GREEN}現在kube config = $KUBECONFIG${NC}"
+    echo "${GREEN}kube token = ${KUBETOKEN}${NC}"
+    echo "${GREEN}kube apiServer = ${KUBEAPISERVER} ${NC}"
 }
 
 clear() {
     export KUBECONFIG_SAVED=
     export KUBECONFIG=
-    echo "${GREEN}現在kube config = $KUBECONFIG${NC}"
+    export KUBETOKEN=
+    export KUBEAPISERVER=
+    echo "${GREEN}現在kube config = $KUBECONFIG ${NC}"
+    echo "${GREEN}kube token = ${KUBETOKEN}${NC}"
+    echo "${GREEN}kube apiServer = ${KUBEAPISERVER} ${NC}"
 }
 
 usage() {
